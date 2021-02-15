@@ -1,2 +1,2 @@
-# coursework
-collection of coding homework
+# code bucket
+collection of miscellaneous coding projects
