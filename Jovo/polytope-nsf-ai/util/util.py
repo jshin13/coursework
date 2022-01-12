@@ -75,6 +75,11 @@ def generate_gaussian_parity(
 
     return X, y.astype(int)
 
+def _generate_2d_rotation(theta=0):
+    R = np.array([[np.cos(theta), np.sin(theta)], [-np.sin(theta), np.cos(theta)]])
+
+    return R
+
 def generate_mask(rng=3, h=0.01):
     '''
     method that generates the grid in the range of [-rng, rng] at h step
