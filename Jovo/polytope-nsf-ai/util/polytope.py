@@ -6,7 +6,7 @@ from matplotlib.path import Path
 from scipy.spatial import Voronoi, voronoi_plot_2d
 
 
-def generate_polytope(rng, h, grid, label=None, seed=1234, no_plot=False):
+def generate_polytope(rng, h, grid, label=None, seed=1234, test=None, no_plot=False):
 
     fig, ax = plt.subplots(1,2, figsize=(6*2,6))
 
@@ -30,11 +30,14 @@ def generate_polytope(rng, h, grid, label=None, seed=1234, no_plot=False):
         vr = Voronoi(choice[:,:2])
 
         regions[ix], vertices[ix] = voronoi_finite_polygons_2d(vr)
-
+        
         for region in regions[ix]:
             poly = [vertices[ix][i] for i in region]
             p = Path(poly)
-            polytope_points[ix].append(grid[p.contains_points(grid[:,:2])])
+            if test is not None:
+                polytope_points[ix].append(test[p.contains_points(test[:,:2])])
+            else:
+                polytope_points[ix].append(grid[p.contains_points(grid[:,:2])])
 
         # if no_plot:
         #     ax[ix].scatter(polytope_points[ix][:,0],polytope_points[ix][:,1],c=polytope_points[ix][:,2], cmap='PRGn', vmin=0, vmax=1)
@@ -82,6 +85,7 @@ def calculate_risks(pA, pB, N):
     return risks
 
 def voronoi_finite_polygons_2d(vor, radius=None):
+    # quick fix for the boundary issue 
     # adopted from https://stackoverflow.com/questions/20515554/colorize-voronoi-diagram
 
     """
