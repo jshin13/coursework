@@ -5,6 +5,50 @@ import matplotlib.pyplot as plt
 from matplotlib.path import Path
 from scipy.spatial import Voronoi, voronoi_plot_2d
 
+# Square polytope
+
+def vertice_number(N):
+    tot = (int(N**(1/2))+1)**2
+    return tot
+
+def draw_vertice(N, rng=1):
+    tot = vertice_number(N)
+    n = int(tot**(1/2))
+    xx = np.linspace(start=-rng, stop=rng, num=n)
+
+    x, y = np.meshgrid(xx, xx)
+    sample = np.c_[x.ravel(), y.ravel()]
+
+    return sample
+
+def get_regions(grid):
+    t = int(grid.shape[0]) #total number of vertices
+    l = int(grid.shape[0]**(1/2)) #length of each side
+    antimask = [(l-1)+l*i for i in range(l-1)] #get anti-mask for non-corner points
+    mask = [i for i in range(t-1) if i not in antimask]
+    coor = []
+    for cd in mask:
+        if cd < t-l:
+            coor.append([
+                cd+l,
+                cd+l,
+                cd,
+                cd+1,
+                cd+l+1,
+                cd+l+1
+            ])
+    return coor
+    # return np.array([n for i,n in enumerate(grid) if i not in mask and i < t-l]) #get actual coordinates
+
+def get_regional_points(grid, grid_fill, regions):
+    rp = []
+    for region in regions:
+        p = Path(grid[region], closed=False)
+        rp.append(grid_fill[p.contains_points(points=grid_fill)])
+
+    return rp
+
+# Voronoi type polytope (not finished)
 
 def generate_polytope(rng, h, grid, label=None, seed=1234, test=None, no_plot=False):
 
@@ -73,14 +117,28 @@ def calculate_risks(pA, pB, N):
     for ix, k in enumerate(polylist):
 
         risk = 0
+        cnt = 0
 
         for pp, pp_test in zip(pA[ix], pB[ix]):
             for ppt in pp_test:
-                risk += np.argmax([0.5, pp[0][2]]) - int(ppt[2])
+                cnt += 1
+                # print(cnt, np.argmax([0.5, pp[0][2]]), int(ppt[2]), int(np.argmax([0.5, pp[0][2]]) != int(ppt[2])))
+                risk += int(np.argmax([0.5, pp[0][2]]) != int(ppt[2]))
 
-        risk /= N
+        # cnts[ix] = cnt
+        risks[ix] = risk / cnt
 
-        risks[ix] = risk
+    # for ix, k in enumerate(polylist):
+
+    #     risk = 0
+
+    #     for pp, pp_test in zip(pA[ix], pB[ix]):
+    #         for ppt in pp_test:
+    #             risk += np.argmax([0.5, pp[0][2]]) - int(ppt[2])
+
+    #     risk /= N
+
+    #     risks[ix] = risk
 
     return risks
 
