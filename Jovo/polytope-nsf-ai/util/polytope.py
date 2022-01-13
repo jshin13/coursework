@@ -60,7 +60,7 @@ def get_regional_points(grid, grid_fill, regions):
     rp = []
     for region in regions:
         p = Path(grid[region], closed=False)
-        rp.append(grid_fill[p.contains_points(points=grid_fill)])
+        rp.append(grid_fill[p.contains_points(points=grid_fill[:,:2])])
 
     return rp
 
