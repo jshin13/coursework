@@ -6,6 +6,22 @@ from matplotlib.path import Path
 from scipy.spatial import Voronoi, voronoi_plot_2d
 
 # Square polytope
+def get_polytope_points(N, grid_fill):
+    '''
+    Function that computes polytope assignment
+
+    N: int
+        Number of polytopes
+    grid_fill: array of shape [number of samples, 3]
+        2D numpy array that will be assigned into each polytope
+    '''
+
+    grid = draw_vertice(N=N)
+
+    regions = get_regions(grid=grid)
+    rp = get_regional_points(grid=grid, grid_fill=grid_fill, regions=regions)
+
+    return rp
 
 def vertice_number(N):
     tot = (int(N**(1/2))+1)**2
@@ -17,19 +33,19 @@ def draw_vertice(N, rng=1):
     xx = np.linspace(start=-rng, stop=rng, num=n)
 
     x, y = np.meshgrid(xx, xx)
-    sample = np.c_[x.ravel(), y.ravel()]
+    grid = np.c_[x.ravel(), y.ravel()]
 
-    return sample
+    return grid
 
 def get_regions(grid):
     t = int(grid.shape[0]) #total number of vertices
     l = int(grid.shape[0]**(1/2)) #length of each side
     antimask = [(l-1)+l*i for i in range(l-1)] #get anti-mask for non-corner points
     mask = [i for i in range(t-1) if i not in antimask]
-    coor = []
+    regions = []
     for cd in mask:
         if cd < t-l:
-            coor.append([
+            regions.append([
                 cd+l,
                 cd+l,
                 cd,
@@ -37,7 +53,7 @@ def get_regions(grid):
                 cd+l+1,
                 cd+l+1
             ])
-    return coor
+    return regions
     # return np.array([n for i,n in enumerate(grid) if i not in mask and i < t-l]) #get actual coordinates
 
 def get_regional_points(grid, grid_fill, regions):
