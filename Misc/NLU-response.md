@@ -22,10 +22,10 @@ grammar korean_music_play;
 
 public <korean_music_play> =  <initial> | <answer1> | <answer2> | <answer3>;
 
-<initial> = (<artist> | <song>) [을 | 를 | 좀] (틀어|들려) [줘 | 줄 수 있어 | 봐];
-<answer1> = <genre> [종류 | 류] [의 | 에] <song> [을 | 들을 | 좀] [듣고 싶어 | 들려줘 | 틀어줘 | 틀어];
+<initial> = (<artist> | <song>) [을 | 를 | 좀] (틀어 | 들려) [줘 | 줄 수 있어 | 봐];
+<answer1> = <genre> [종류 | 류] [의 | 에] [음악 | 노래] [을 | 들을 | 좀] [듣고 싶어 | 들려줘 | 틀어줘 | 틀어];
 <answer2> = <artist> [의 | 에] <album> [틀어줘 | 틀어 | 들려줘];
-<answer3> = <artist> [의 | 에] <song> [아무거나] [틀어줘 | 틀어 | 들려줘];
+<answer3> = <artist> [의 | 에] [음악 | 노래] [아무거나] [틀어줘 | 틀어 | 들려줘];
 
 <artist> = (the beatles | 비틀즈) | 
            (radiohead | 라디오헤드) | 
