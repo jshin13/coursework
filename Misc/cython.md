@@ -8,6 +8,41 @@
 - The `nogil` function annotation asserts that a Cython function is safe to use without the GIL, and compilation will fail if it interacts with Python in an unsafe manner
 - The `with nogil` context manager explicitly unlocks the CPython GIL while active
 
+
+```python
+%%cython
+
+# Annotating a function with `nogil` indicates only that it is safe
+# to call in a `with nogil` block. It *does not* release the GIL.
+cdef unsigned long fibonacci(unsigned long n) nogil:
+    if n <= 1:
+        return n
+
+    cdef unsigned long a = 0, b = 1, c = 0
+
+    c = a + b
+    for _i in range(2, n):
+        a = b
+        b = c
+        c = a + b
+
+    return c
+
+
+def cython_nogil(unsigned long n):
+    # Explicitly release the GIL while running `fibonacci`
+    with nogil:
+        value = fibonacci(n)
+
+    return value
+
+
+def cython_gil(unsigned long n):
+    # Because the GIL is not explicitly released, it implicitly
+    # remains acquired when running the `fibonacci` function
+    return fibonacci(n)
+```
+
 Reference: https://thomasnyberg.com/releasing_the_gil.html
 
 ### 
