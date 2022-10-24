@@ -5,6 +5,9 @@
 
 ***And when it comes to managing the GIL, there are two special features:***
 
+- The `nogil` function annotation asserts that a Cython function is safe to use without the GIL, and compilation will fail if it interacts with Python in an unsafe manner
+- The `with nogil` context manager explicitly unlocks the CPython GIL while active
+
 Reference: https://thomasnyberg.com/releasing_the_gil.html
 
 ### 
