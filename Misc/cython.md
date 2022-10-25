@@ -43,6 +43,8 @@ def cython_gil(unsigned long n):
     return fibonacci(n)
 ```
 
+> Bottom line: use Cython’s `nogil` annotation to assert that functions are safe for calling when the GIL is unlocked, and `with nogil` to actually unlock the GIL and run those functions
+
 Reference: https://thomasnyberg.com/releasing_the_gil.html
 
 ### 
