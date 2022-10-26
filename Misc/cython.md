@@ -45,6 +45,6 @@ def cython_gil(unsigned long n):
 
 > Bottom line: use Cython’s `nogil` annotation to assert that functions are safe for calling when the GIL is unlocked, and `with nogil` to actually unlock the GIL and run those functions
 
-Reference: https://thomasnyberg.com/releasing_the_gil.html
+Reference: [Rf1](https://thomasnyberg.com/releasing_the_gil.html), [Rf2](https://speice.io/2019/12/release-the-gil.html)
 
 ### 
