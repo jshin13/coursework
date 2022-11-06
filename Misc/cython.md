@@ -47,4 +47,15 @@ def cython_gil(unsigned long n):
 
 Reference: [Rf1](https://thomasnyberg.com/releasing_the_gil.html), [Rf2](https://speice.io/2019/12/release-the-gil.html)
 
-### 
+### Inline Function
+***Inline Function are those function whose definitions are small and be substituted at the place where its function call is happened. Function substitution is totally compiler choice.***
+- Normally GCC’s file scope is “not extern linkage”. That means inline function is never ever provided to the linker which is causing linker error, mentioned above.
+- To resolve this problem use “static” before inline. Using static keyword forces the compiler to consider this inline function in the linker, and hence the program compiles and run successfully.
+
+Additional Information
+> By declaring a function inline, you can direct GCC to make calls to that function faster. One way GCC can achieve this is to integrate that function's code into the code for its callers. This makes execution faster by eliminating the function-call overhead; in addition, if any of the actual argument values are constant, their known values may permit simplifications at compile time so that not all of the inline function's code needs to be included. The effect on code size is less predictable; object code may be larger or smaller with function inlining, depending on the particular case. <br><br>
+So, it tells the compiler to build the function into the code where it is used with the intention of improving execution time.
+
+```
+If you declare Small functions like setting/clearing a flag or some bit toggle which are performed repeatedly, inline, it can make a big performance difference with respect to time, but at the cost of code size.
+```
