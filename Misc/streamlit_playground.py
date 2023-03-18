@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 import streamlit as st
 import time
 
@@ -13,3 +14,7 @@ st.write(['data1', 'data2'])
 
 values = np.random.rand(1,10)
 st.bar_chart(values)
+
+st.subheader('buttons')
+df = pd.read_excel('https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv')
+st.write(df)
