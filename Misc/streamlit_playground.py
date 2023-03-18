@@ -34,7 +34,10 @@ text_demo = """It was the best of times, it was the worst of times, it was
 field = ''
 ta = st.empty()
 
-for i in text_demo.split(' '):
-    time.sleep(0.3)
-    field += i + ' '
-    ta.text_area('Text Field', field)
+button = st.button('start') #adds button; here the button is placed below the text_area
+
+if button:
+    for i in text_demo.split(' '):
+        time.sleep(0.3)
+        field += i + ' '
+        ta.text_area('Text Field', field)
