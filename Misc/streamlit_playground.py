@@ -29,10 +29,10 @@ text_demo = """It was the best of times, it was the worst of times, it was
     """
 
 field = ''
-txt = st.text_area('text_field', value=field)
+ta = st.empty()
 
 st.subheader('progressive texts')
 for i in text_demo.split(' '):
-    time.sleep(1)
+    time.sleep(0.3)
     field += i + ' '
-    st.text(field)
+    ta.text_area('Text Field', field)
