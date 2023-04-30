@@ -5,8 +5,8 @@ const state = proxy({
     color: '#FFF',
     isLogoTexture: true,
     isFullTexture: false,
-    locoDecal: './vite.png',
-    fullDecal: './vite.png' //from public folder
+    locoDecal: './vite.svg',
+    fullDecal: './vite.svg' //from public folder
 });
 
 export default state;
