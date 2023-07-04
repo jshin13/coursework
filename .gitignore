@@ -1,7 +1,12 @@
+# github
 .git
 .ipynb_checkpoints
+
+# general temp data
 *.xlsx
 __pycache__
+
+#jovo
 Jovo/dat
 rerf-py
 manifold_random_forests
@@ -11,3 +16,6 @@ section2
 *.bib 
 imgs
 convert
+
+# tools
+data
